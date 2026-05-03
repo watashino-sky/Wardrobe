@@ -317,8 +317,8 @@
       <div class="form-group">
         <label class="form-label">画像</label>
         <div class="img-upload-grid" id="imgGrid">
-          <label class="img-add" for="imgInput">＋</label>
-          <input type="file" id="imgInput" accept="image/*" multiple capture="environment" style="display:none">
+          <div class="img-add" id="imgAddBtn">＋</div>
+          <input type="file" id="imgInput" accept="image/*" multiple style="display:none">
         </div>
       </div>
       <!-- Name -->
@@ -521,6 +521,7 @@ function openEdit(item) {
 function closeEdit() { document.getElementById('editOverlay').classList.remove('open'); }
 
 document.getElementById('fabBtn').addEventListener('click', openAdd);
+document.getElementById('imgAddBtn').addEventListener('click', () => document.getElementById('imgInput').click());
 document.getElementById('editCancelBtn').addEventListener('click', closeEdit);
 
 // Image handling
@@ -548,10 +549,11 @@ function renderImgGrid() {
       <img src="${src}">
       <button class="img-thumb-del" data-idx="${i}">×</button>
     </div>`).join('') +
-    `<label class="img-add" for="imgInput">＋</label>`;
+    `<div class="img-add" id="imgAddBtn">＋</div>`;
   grid.querySelectorAll('.img-thumb-del').forEach(btn => {
     btn.addEventListener('click', () => { editImgs.splice(+btn.dataset.idx, 1); renderImgGrid(); });
   });
+  document.getElementById('imgAddBtn').addEventListener('click', () => document.getElementById('imgInput').click());
 }
 
 function renderTagSelector() {
